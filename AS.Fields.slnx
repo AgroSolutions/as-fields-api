@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="AS.Fields.API/AS.Fields.API.csproj" Id="e5e19dd5-f6f1-486c-a56a-657232160ae0" />
+  <Project Path="AS.Fields.Application/AS.Fields.Application.csproj" Id="5ea5d057-3e24-4d6e-9b30-9610f97740c2" />
+  <Project Path="AS.Fields.Domain/AS.Fields.Domain.csproj" Id="2a959bd8-edd4-4c0a-99da-1c9cd2f46294" />
+  <Project Path="AS.Fields.Infra/AS.Fields.Infra.csproj" Id="a5f70e3c-4910-4a2b-8855-414f774507f3" />
+  <Project Path="AS.Fields.Test/AS.Fields.Test.csproj" Id="8e5bbcac-1a7e-49ca-9fa2-21b43c508e5e" />
+</Solution>

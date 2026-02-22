@@ -1,3 +1,4 @@
+using AS.Fields.API;
 using AS.Fields.API.Configurations;
 using AS.Fields.Application;
 using AS.Fields.Application.Middlewares;
@@ -35,10 +36,6 @@ builder.Services.AddSwaggerConfiguration();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
-#region Elasticsearch
-//builder.Services.AddElasticsearch(builder.Configuration);
-#endregion
-
 #region Amazon SQS
 var messagingSection = builder.Configuration.GetSection("Messaging");
 if (!messagingSection.Exists())
@@ -54,6 +51,8 @@ builder.Services.AddInfraModules();
 builder.Services.AddApplicationModules();
 
 #endregion
+
+builder.Services.AddHostedService<Worker>();
 
 var app = builder.Build();
 
@@ -74,6 +73,7 @@ catch (Exception ex)
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
+
 
 app.UseAuthorization();
 

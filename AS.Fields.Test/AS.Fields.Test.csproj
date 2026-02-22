@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AS.Fields.Application\AS.Fields.Application.csproj" />
     <ProjectReference Include="..\AS.Fields.Domain\AS.Fields.Domain.csproj" />
     <ProjectReference Include="..\AS.Fields.Infra\AS.Fields.Infra.csproj" />

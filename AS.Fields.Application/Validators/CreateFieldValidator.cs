@@ -31,7 +31,7 @@ namespace AS.Fields.Application.Validators
         public PartialUpdateFieldValidator()
         {
             RuleFor(x => x.Boundary)
-                 .SetValidator(new BoundaryValidator())
+                 .SetValidator(new BoundaryValidator()!)
                  .When(x => x.Boundary != null);
 
             RuleFor(x => x.Description)
@@ -51,7 +51,7 @@ namespace AS.Fields.Application.Validators
         }
     }
 
-    class BoundaryValidator : AbstractValidator<Boundary?>
+    class BoundaryValidator : AbstractValidator<Boundary>
     {
         public BoundaryValidator()
         {

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.OpenApi;
+﻿using Microsoft.OpenApi;
 
 namespace AS.Fields.API.Configurations
 {
@@ -10,7 +9,6 @@ namespace AS.Fields.API.Configurations
             services.AddSwaggerGen(c =>
             {
                 c.OperationFilter<SwaggerResponseWrapperOperationFilter>();
-                c.OperationFilter<SwaggerResponseGenericExampleFilter>();
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -22,22 +20,6 @@ namespace AS.Fields.API.Configurations
                 });
 
                 c.AddSecurityRequirement(document => new() { [new OpenApiSecuritySchemeReference("Bearer", document)] = [] });
-
-
-                /* c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                 {
-                     {
-                         new OpenApiSecurityScheme
-                         {
-                             Reference = new OpenApiReference
-                             {
-                                 Id = "Bearer",
-                                 Type = ReferenceType.SecurityScheme
-                             }
-                         },
-                         Array.Empty<string>()
-                     }
-                 });*/
 
                 var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);

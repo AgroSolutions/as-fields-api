@@ -1,5 +1,4 @@
-﻿using Amazon.Runtime.Internal.Util;
-using AS.Fields.Application.Exceptions;
+﻿using AS.Fields.Application.Exceptions;
 using AS.Fields.Application.Validators;
 using AS.Fields.Domain.DTO.Property;
 using AS.Fields.Domain.Entities;
@@ -13,7 +12,7 @@ namespace AS.Fields.Application.Services
 {
     public class PropertyService(ILogger<PropertyService> logger, IPropertyRepository propertyRepository) : IPropertyService
     {
-        public Task<List<Property>> GetAllProperties(Guid farmerId) => propertyRepository.QueryAsync(p => p.FarmerId == farmerId).ToListAsync();
+        public Task<List<Property>> GetAllPropertiesAsync(Guid farmerId) => propertyRepository.QueryAsync(p => p.FarmerId == farmerId).ToListAsync();
 
         public async Task<Property> GetPropertyByIdAsync(Guid farmerId, Guid propertyId)
         {

@@ -1,6 +1,9 @@
-﻿using AS.Fields.Application.Publishers;
+﻿using AS.Fields.Application.Handlers;
+using AS.Fields.Application.Publishers;
 using AS.Fields.Application.Publishers.Interfaces;
 using AS.Fields.Application.Services;
+using AS.Fields.Domain.DTO.Messaging.Field;
+using AS.Fields.Domain.Interfaces.Messaging;
 using AS.Fields.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +17,9 @@ namespace AS.Fields.Application
     {
         public static IServiceCollection AddApplicationModules(this IServiceCollection services)
         {
+            // Handlers
+            services.AddTransient<IMessageHandler<UpdateFieldStatusDTO>, UpdateFieldStatusMessageHandler>();
+
             // Publishers
             services.AddTransient<ISensorPublisher, SensorPublisher>();
 

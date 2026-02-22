@@ -2,6 +2,7 @@
 using AS.Fields.Application.Publishers.Interfaces;
 using AS.Fields.Application.Validators;
 using AS.Fields.Domain.DTO.Field;
+using AS.Fields.Domain.DTO.Messaging.Field;
 using AS.Fields.Domain.DTO.Messaging.Sensor;
 using AS.Fields.Domain.Entities;
 using AS.Fields.Domain.Enums;
@@ -21,7 +22,7 @@ namespace AS.Fields.Application.Services
         ISensorPublisher sensorPublisher
     ) : IFieldService
     {
-        public Task<List<Field>> GetAllFields(Guid propertyId) => fieldRepository.QueryAsync(f => f.PropertyId == propertyId).ToListAsync();
+        public Task<List<Field>> GetAllFieldsAsync(Guid propertyId) => fieldRepository.QueryAsync(f => f.PropertyId == propertyId).ToListAsync();
 
         public async Task<Field> GetFieldByIdAsync(Guid id)
         {
@@ -92,7 +93,7 @@ namespace AS.Fields.Application.Services
                 Observations = dto.Observations ?? field.Observations,
                 Status = field.Status,
                 CreatedAt = field.CreatedAt,
-                PropertyId = field.PropertyId
+                PropertyId = field.PropertyId,
             };
 
             if (dto.Crop.HasValue)
@@ -119,6 +120,27 @@ namespace AS.Fields.Application.Services
                     f.Boundary.LongMin <= novoBoundary.LongMax &&
                     f.Boundary.LongMax >= novoBoundary.LongMin
                 ).AnyAsync();
+        }
+
+        public async Task<bool> UpdateStatus(UpdateFieldStatusDTO dto)
+        {
+
+            Field field = await fieldRepository.GetById(dto.FieldId)
+                ?? throw new NotFoundException("Talhão não encontrado");
+
+            Field newModel = new(dto.FieldId)
+            {
+                Description = field.Description,
+                Boundary = field.Boundary,
+                Observations = field.Observations,
+                Status = dto.Status,
+                UpdatedAt = dto.UpdatedAt,
+                CreatedAt = field.CreatedAt,
+                PropertyId = field.PropertyId,
+            };
+            newModel.ChangeCrop(field.Crop, field.PlantingDate);
+
+            return await fieldRepository.UpdateAsync(newModel);
         }
     }
 }

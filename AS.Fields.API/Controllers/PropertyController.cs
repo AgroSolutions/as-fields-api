@@ -16,7 +16,7 @@ namespace AS.Fields.API.Controllers
         public async Task<IActionResult> Get()
         {
 
-            var properties = await propertyService.GetAllProperties(GetUserId());
+            var properties = await propertyService.GetAllPropertiesAsync(GetUserId());
             return Success(properties, "Lista de propriedades do usuário, retornada com sucesso.");
         }
 
@@ -54,7 +54,7 @@ namespace AS.Fields.API.Controllers
         [HttpGet("{propertyId}/Field")]
         public async Task<IActionResult> GetFields([FromRoute] Guid propertyId)
         {
-            var fields = await fieldService.GetAllFields(propertyId);
+            var fields = await fieldService.GetAllFieldsAsync(propertyId);
             return Success(fields, "Lista de talhões da propriedade, retornada com sucesso.");
         }
 

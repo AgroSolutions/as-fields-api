@@ -12,6 +12,7 @@ namespace AS.Fields.Infra.Messaging.Sqs
         {
             try
             {
+                logger.LogInformation("Publishing message to SQS queue {QueueName}: {@Message}", queueName, JsonConvert.SerializeObject(message));
                 var queueUrlResponse = await sqs.GetQueueUrlAsync(queueName, cancellationToken);
 
                 var request = new SendMessageRequest

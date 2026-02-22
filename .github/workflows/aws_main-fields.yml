@@ -28,7 +28,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Tests
-        run: dotnet test ./AS.Fields.Tests/AS.Fields.Tests.csproj --configuration Release --no-build --verbosity normal
+        run: dotnet test ./AS.Fields.Test/AS.Fields.Test.csproj --configuration Release --no-build --verbosity normal
   deploy:
     name: Deploy to Production
     needs: test

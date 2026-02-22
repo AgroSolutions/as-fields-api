@@ -7,7 +7,7 @@ namespace AS.Fields.Domain.ValueObjects
         protected Boundary() { }
 
         [JsonConstructor]
-        public Boundary(int latMax, int latMin, int longMax, int longMin)
+        public Boundary(int latMin, int latMax, int longMin , int longMax)
         {
             LatMax = latMax;
             LatMin = latMin;

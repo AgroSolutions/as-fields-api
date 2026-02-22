@@ -75,9 +75,9 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         mkdir -p rendered
-        envsubst < k8s/payments-api-config.yaml > rendered/payments-api-config.yaml
-        envsubst < k8s/payments-api-deployment.yaml > rendered/payments-api-deployment.yaml
-        envsubst < k8s/payments-api-service.yaml > rendered/payments-api-service.yaml
+        envsubst < k8s/as-fields-api-config.yaml > rendered/as-fields-api-config.yaml
+        envsubst < k8s/as-fields-api-deployment.yaml > rendered/as-fields-api-deployment.yaml
+        envsubst < k8s/as-fields-api-service.yaml > rendered/as-fields-api-service.yaml
 
     # Deploy no Kubernetes
     - name: Apply Kubernetes manifests

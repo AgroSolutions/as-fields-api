@@ -17,15 +17,15 @@ namespace AS.Fields.Application
     {
         public static IServiceCollection AddApplicationModules(this IServiceCollection services)
         {
-            // Handlers
-            services.AddTransient<IMessageHandler<UpdateFieldStatusDTO>, UpdateFieldStatusMessageHandler>();
-
             // Publishers
             services.AddTransient<ISensorPublisher, SensorPublisher>();
 
             // Services
             services.AddTransient<IFieldService, FieldService>();
             services.AddTransient<IPropertyService, PropertyService>();
+
+            // Handlers
+            services.AddTransient<IMessageHandler<UpdateFieldStatusDTO>, UpdateFieldStatusMessageHandler>();
 
             return services;
         }

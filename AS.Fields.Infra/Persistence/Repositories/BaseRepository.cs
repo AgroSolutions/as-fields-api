@@ -15,7 +15,7 @@ namespace AS.Fields.Infra.Persistence.Repositories
         public virtual IEnumerable<TEntity> GetAll()
             => _dbSet.AsNoTracking().AsEnumerable();
 
-        public Task<TEntity?> GetById(Guid id) => _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+        public Task<TEntity?> GetById(Guid id) => _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         public virtual IQueryable<TEntity> QueryAsync(Expression<Func<TEntity, bool>> predicate)
             => _dbSet.Where(predicate);

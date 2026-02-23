@@ -17,7 +17,7 @@ namespace AS.Fields.Infra.Messaging.Sqs
             CancellationToken cancellationToken = default)
         {
             if (handler is null)
-                throw new ArgumentNullException(nameof(handler), 
+                throw new ArgumentNullException(nameof(handler),
                     $"IMessageHandler<{typeof(T).Name}> is null. Check DI registration.");
 
             // Resolve URL da fila
@@ -49,9 +49,6 @@ namespace AS.Fields.Infra.Messaging.Sqs
                                   ?? throw new InvalidOperationException("Failed to deserialize message");
 
                         await handler.HandleAsync(obj, cancellationToken);
-
-                        // ACK = delete message
-                        await sqs.DeleteMessageAsync(queueUrl, message.ReceiptHandle, cancellationToken);
                     }
                     catch (Exception ex)
                     {
@@ -61,6 +58,11 @@ namespace AS.Fields.Infra.Messaging.Sqs
                             queueName,
                             message.Body
                         );
+                    }
+                    finally
+                    {
+                        // ACK = delete message
+                        await sqs.DeleteMessageAsync(queueUrl, message.ReceiptHandle, cancellationToken);
                     }
                 }
             }

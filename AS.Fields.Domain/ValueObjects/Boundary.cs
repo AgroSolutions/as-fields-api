@@ -15,9 +15,9 @@ namespace AS.Fields.Domain.ValueObjects
             LongMin = longMin;
         }
 
-        public int LatMax { get; init; }
         public int LatMin { get; init; }
-        public int LongMax { get; init; }
+        public int LatMax { get; init; }
         public int LongMin { get; init; }
+        public int LongMax { get; init; }
     }
 }

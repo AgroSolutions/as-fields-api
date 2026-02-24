@@ -77,6 +77,8 @@ jobs:
         mkdir -p rendered
         envsubst < k8s/as-fields-api-deployment.yaml > rendered/as-fields-api-deployment.yaml
         envsubst < k8s/as-fields-api-service.yaml > rendered/as-fields-api-service.yaml
+        envsubst < k8s/as-fields-api-monitor.yaml > rendered/as-fields-api-monitor.yaml
+
 
     # Deploy no Kubernetes
     - name: Apply Kubernetes manifests

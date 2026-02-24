@@ -6,6 +6,7 @@ using AS.Fields.Infra;
 using AS.Fields.Infra.Messaging.Config;
 using AS.Fields.Infra.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,7 +75,11 @@ catch (Exception ex)
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
 
+app.UseRouting();
+app.UseHttpMetrics();
+app.MapMetrics();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

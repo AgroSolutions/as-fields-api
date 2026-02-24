@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: as-fields-api
+  namespace: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+       - default
+as-fields-api:
+    selector:
+      matchLabels:
+        app: as-fields-api
+    endpoints:
+    - port: http
+      path: /metrics
+      interval: 10s

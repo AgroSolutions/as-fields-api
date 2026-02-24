@@ -3,6 +3,8 @@ kind: ServiceMonitor
 metadata:
   name: as-fields-api
   namespace: monitoring
+  labels:
+    release: stable
 spec:
   namespaceSelector:
     matchNames:

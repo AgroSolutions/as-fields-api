@@ -13,6 +13,6 @@ spec:
     matchLabels:
       app: as-fields-api
   endpoints:
-  - port: http
+  - port: tcp
     path: /metrics
     interval: 10s

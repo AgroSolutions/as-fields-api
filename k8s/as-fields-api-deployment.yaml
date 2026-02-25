@@ -29,8 +29,6 @@ spec:
           envFrom:
             - secretRef:
                 name: aws-credentials
-            - configMapRef:
-                name: as-fields-config
           resources:
             requests:
               cpu: "100m"

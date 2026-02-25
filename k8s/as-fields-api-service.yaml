@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: as-fields-api-service
+  labels:
+    app: as-fields-api
 spec:
   selector:
     app: as-fields-api

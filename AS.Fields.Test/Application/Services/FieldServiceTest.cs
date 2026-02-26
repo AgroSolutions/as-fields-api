@@ -1,4 +1,5 @@
 ﻿using AS.Fields.Application.Exceptions;
+using AS.Fields.Application.Observability;
 using AS.Fields.Application.Publishers.Interfaces;
 using AS.Fields.Application.Services;
 using AS.Fields.Domain.DTO.Field;
@@ -25,6 +26,7 @@ namespace AS.Fields.Test.Application.Services
         private readonly Mock<IFieldRepository> fieldRepositoryMock = new();
         private readonly Mock<IPropertyRepository> propertyRepositoryMock = new();
         private readonly Mock<ISensorPublisher> sensorPublisherMock = new();
+        private readonly Mock<IFieldTelemetry> telemetryMock = new();
 
         private Guid propertyIdDefault = Guid.NewGuid();
         private CreateFieldDTO createFieldDTODefault = new()
@@ -44,7 +46,8 @@ namespace AS.Fields.Test.Application.Services
                 loggerMock.Object,
                 fieldRepositoryMock.Object,
                 propertyRepositoryMock.Object,
-                sensorPublisherMock.Object
+                sensorPublisherMock.Object,
+                telemetryMock.Object
             );
         }
 

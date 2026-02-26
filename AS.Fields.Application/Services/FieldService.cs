@@ -1,4 +1,5 @@
 ﻿using AS.Fields.Application.Exceptions;
+using AS.Fields.Application.Observability;
 using AS.Fields.Application.Publishers.Interfaces;
 using AS.Fields.Application.Validators;
 using AS.Fields.Domain.DTO.Field;
@@ -19,7 +20,8 @@ namespace AS.Fields.Application.Services
         ILogger<FieldService> logger,
         IFieldRepository fieldRepository,
         IPropertyRepository propertyRepository,
-        ISensorPublisher sensorPublisher
+        ISensorPublisher sensorPublisher,
+        IFieldTelemetry telemetry
     ) : IFieldService
     {
         public Task<List<Field>> GetAllFieldsAsync(Guid propertyId) => fieldRepository.QueryAsync(f => f.PropertyId == propertyId).ToListAsync();
@@ -65,6 +67,8 @@ namespace AS.Fields.Application.Services
                 FieldId = newField.Id,
                 Name = "Sensor"
             });
+
+            telemetry.FieldCreated(propertyId);
             return newField;
         }
 
@@ -107,7 +111,11 @@ namespace AS.Fields.Application.Services
             Field field = await fieldRepository.GetById(id)
                 ?? throw new NotFoundException("Talhão não encontrado");
 
-            return await fieldRepository.DeleteAsync(field);
+            bool deleted = await fieldRepository.DeleteAsync(field);
+
+            if (deleted) 
+                telemetry.FieldDeleted(field.PropertyId);
+            return deleted;
         }
 
         private async Task<bool> ExisteBoundarySobrepostoAsync(Boundary novoBoundary, Guid? fieldId = null)

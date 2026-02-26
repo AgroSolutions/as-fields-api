@@ -1,7 +1,9 @@
 using AS.Fields.API;
 using AS.Fields.API.Configurations;
+using AS.Fields.API.Observability;
 using AS.Fields.Application;
 using AS.Fields.Application.Middlewares;
+using AS.Fields.Application.Observability;
 using AS.Fields.Infra;
 using AS.Fields.Infra.Messaging.Config;
 using AS.Fields.Infra.Persistence.Context;
@@ -50,7 +52,7 @@ builder.Services.ConfigureAmazonSQS(builder.Configuration);
 
 builder.Services.AddInfraModules();
 builder.Services.AddApplicationModules();
-
+builder.Services.AddSingleton<IFieldTelemetry, PrometheusFieldTelemetry>();
 #endregion
 
 builder.Services.AddHostedService<Worker>();

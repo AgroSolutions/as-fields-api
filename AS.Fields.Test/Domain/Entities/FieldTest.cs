@@ -23,9 +23,9 @@ namespace AS.Fields.Test.Domain.Entities
                 PropertyId = propertyId,
                 Boundary = boundary,
                 Description = description,
-                Status = status,
                 Observations = observations
             };
+            field.ChangeStatus(status);
 
             // Assert
             Assert.Equal(propertyId, field.PropertyId);

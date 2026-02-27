@@ -54,10 +54,10 @@ namespace AS.Fields.Application.Services
                 Description = dto.Description,
                 Boundary = dto.Boundary,
                 Observations = dto.Observations,
-                Status = FieldStatus.Unknown,
                 PropertyId = propertyId
             };
             field.ChangeCrop(dto.Crop, dto.PlantingDate);
+            field.ChangeStatus(FieldStatus.Unknown);
 
             Field newField = await fieldRepository.AddAsync(field)
                 ?? throw new Exception("Field não foi criado");
@@ -90,20 +90,14 @@ namespace AS.Fields.Application.Services
                 throw new ValidationException(result.Errors);
             }
 
-            Field newModel = new(id)
-            {
-                Description = dto.Description ?? field.Description,
-                Boundary = dto.Boundary ?? field.Boundary,
-                Observations = dto.Observations ?? field.Observations,
-                Status = field.Status,
-                CreatedAt = field.CreatedAt,
-                PropertyId = field.PropertyId,
-            };
+            field.Description = dto.Description ?? field.Description;
+            field.Boundary = dto.Boundary ?? field.Boundary;
+            field.Observations = dto.Observations ?? field.Observations;
 
             if (dto.Crop.HasValue)
-                newModel.ChangeCrop(dto.Crop.Value, dto.PlantingDate.GetValueOrDefault());
+                field.ChangeCrop(dto.Crop.Value, dto.PlantingDate.GetValueOrDefault());
 
-            return await fieldRepository.UpdateAsync(newModel);
+            return await fieldRepository.UpdateAsync(field);
         }
 
         public async Task<bool> DeleteFieldAsync(Guid id)
@@ -138,20 +132,9 @@ namespace AS.Fields.Application.Services
 
             Field field = await fieldRepository.GetById(dto.FieldId)
                 ?? throw new NotFoundException("Talhão não encontrado");
+            field.ChangeStatus(dto.Status);
 
-            Field newModel = new(dto.FieldId)
-            {
-                Description = field.Description,
-                Boundary = field.Boundary,
-                Observations = field.Observations,
-                Status = dto.Status,
-                UpdatedAt = dto.UpdatedAt,
-                CreatedAt = field.CreatedAt,
-                PropertyId = field.PropertyId,
-            };
-            newModel.ChangeCrop(field.Crop, field.PlantingDate);
-
-            return await fieldRepository.UpdateAsync(newModel);
+            return await fieldRepository.UpdateAsync(field);
         }
     }
 }

@@ -7,12 +7,12 @@ namespace AS.Fields.Domain.Entities
     {
         protected Field() { }
         public Field(Guid? id = null) : base(id) { }
-    
+
         public required Guid PropertyId { get; init; }
         public Property? Property { get; protected set; }
 
-        public required Boundary Boundary { get; init; }
-        public required string Description { get; init; }
+        public required Boundary Boundary { get; set; }
+        public required string Description { get; set; }
 
         public CropType Crop { get; private set; }
         public DateTime PlantingDate { get; private set; }
@@ -22,7 +22,8 @@ namespace AS.Fields.Domain.Entities
             PlantingDate = plantingDate;
         }
 
-        public FieldStatus Status { get; init; }
-        public string? Observations { get; init; }
+        public FieldStatus Status { get; private set; }
+        public void ChangeStatus(FieldStatus newStatus) => Status = newStatus;
+        public string? Observations { get; set; }
     }
 }

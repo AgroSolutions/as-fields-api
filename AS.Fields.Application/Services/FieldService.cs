@@ -134,7 +134,18 @@ namespace AS.Fields.Application.Services
                 ?? throw new NotFoundException("Talhão não encontrado");
             field.ChangeStatus(dto.Status);
 
-            return await fieldRepository.UpdateAsync(field);
+            Property property = await propertyRepository.GetById(field.PropertyId)
+                ?? throw new NotFoundException("Propriedade não encontrada");
+
+            bool atualizado = await fieldRepository.UpdateAsync(field);
+
+            if (atualizado)
+            {
+                telemetry.FieldStatusChanged(field.PropertyId, property.Name,
+                    field.Id, dto.Status);
+            }
+
+            return atualizado;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AS.Fields.Application.Observability;
+using AS.Fields.Domain.Enums;
 using Prometheus;
 
 namespace AS.Fields.API.Observability;
@@ -17,6 +18,15 @@ public class PrometheusFieldTelemetry : IFieldTelemetry
                 LabelNames = ["service", "env", "property_id", "property_name"]
             });
 
+    private static readonly Gauge CurrentFieldStatusGauge =
+    Metrics.CreateGauge(
+        "as_fields_current_field_status",
+        "Status atual do talhao",
+        new GaugeConfiguration
+        {
+            LabelNames = ["property_id", "property_name", "field_id", "status_name"]
+        });
+
     public void FieldCreated(Guid propertyId, string propertyName)
     {
         PropertyFieldsCount.WithLabels(Service, Env, propertyId.ToString(), propertyName)
@@ -27,5 +37,12 @@ public class PrometheusFieldTelemetry : IFieldTelemetry
     {
         PropertyFieldsCount.WithLabels(Service, Env, propertyId.ToString(), propertyName)
             .Dec();
+    }
+
+    public void FieldStatusChanged(Guid propertyId, string propertyName, Guid fieldId, FieldStatus status)
+    {
+        CurrentFieldStatusGauge
+            .WithLabels(propertyId.ToString(), propertyName, fieldId.ToString(), status.ToString())
+            .Set((int)status);
     }
 }

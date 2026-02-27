@@ -283,7 +283,13 @@ namespace AS.Fields.Test.Application.Services
             Guid fieldId = Guid.NewGuid();
             Field existingField = new(fieldId) { PropertyId = propertyIdDefault, Description = "Descricao", Boundary = new Boundary(1, 2, 2, 3) };
             existingField.ChangeStatus(FieldStatus.Unknown);
-
+            propertyRepositoryMock.Setup(repo => repo.GetById(existingField.PropertyId))
+                .ReturnsAsync(new Property()
+                {
+                    Name = "Propriedade",
+                    FarmerId = Guid.NewGuid(),
+                    Description = "Description",
+                });
 
             UpdateFieldStatusDTO updateDTO = new() { FieldId = fieldId, Status = FieldStatus.DroughtAlert };
 

@@ -24,7 +24,7 @@ public class PrometheusFieldTelemetry : IFieldTelemetry
         "Status atual do talhao",
         new GaugeConfiguration
         {
-            LabelNames = ["property_id", "property_name", "field_id", "status_name"]
+            LabelNames = ["property_id", "property_name", "field_id"]
         });
 
     public void FieldCreated(Guid propertyId, string propertyName)
@@ -42,7 +42,7 @@ public class PrometheusFieldTelemetry : IFieldTelemetry
     public void FieldStatusChanged(Guid propertyId, string propertyName, Guid fieldId, FieldStatus status)
     {
         CurrentFieldStatusGauge
-            .WithLabels(propertyId.ToString(), propertyName, fieldId.ToString(), status.ToString())
+            .WithLabels(propertyId.ToString(), propertyName, fieldId.ToString())
             .Set((int)status);
     }
 }

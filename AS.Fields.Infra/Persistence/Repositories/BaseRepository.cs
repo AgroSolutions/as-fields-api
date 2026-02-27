@@ -30,6 +30,15 @@ namespace AS.Fields.Infra.Persistence.Repositories
         public virtual async Task<bool> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             entity.UpdatedAt = DateTime.UtcNow;
+            var local = _context.Set<TEntity>()
+                .Local
+                .FirstOrDefault(entry => entry.Id == entity.Id);
+
+            if (local != null)
+            {
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
             _dbSet.Update(entity);
             await _context.SaveChangesAsync(cancellationToken);
             return true;

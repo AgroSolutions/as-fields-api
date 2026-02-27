@@ -246,6 +246,13 @@ namespace AS.Fields.Test.Application.Services
                 .ReturnsAsync(existingField);
             fieldRepositoryMock.Setup(repo => repo.DeleteAsync(existingField))
                 .ReturnsAsync(true);
+            propertyRepositoryMock.Setup(repo => repo.GetById(existingField.PropertyId))
+                .ReturnsAsync(new Property()
+                {
+                    Name = "Propriedade",
+                    FarmerId = Guid.NewGuid(),
+                    Description = "Description",
+                });
 
             // Act
             bool result = await service.DeleteFieldAsync(fieldId);

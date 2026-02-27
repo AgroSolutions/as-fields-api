@@ -68,7 +68,7 @@ namespace AS.Fields.Application.Services
                 Name = "Sensor"
             });
 
-            telemetry.FieldCreated(propertyId);
+            telemetry.FieldCreated(propertyId, property.Name);
             return newField;
         }
 
@@ -111,10 +111,13 @@ namespace AS.Fields.Application.Services
             Field field = await fieldRepository.GetById(id)
                 ?? throw new NotFoundException("Talhão não encontrado");
 
+            Property property = await propertyRepository.GetById(field.PropertyId)
+                ?? throw new NotFoundException("Propriedade não encontrada");
+
             bool deleted = await fieldRepository.DeleteAsync(field);
 
-            if (deleted) 
-                telemetry.FieldDeleted(field.PropertyId);
+            if (deleted)
+                telemetry.FieldDeleted(field.PropertyId, property.Name);
             return deleted;
         }
 

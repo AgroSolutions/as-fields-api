@@ -14,16 +14,18 @@ public class PrometheusFieldTelemetry : IFieldTelemetry
             "Quantidade atual de fields por property",
             new GaugeConfiguration
             {
-                LabelNames = ["service", "env", "property_id"]
+                LabelNames = ["service", "env", "property_id", "property_name"]
             });
 
-    public void FieldCreated(Guid propertyId)
+    public void FieldCreated(Guid propertyId, string propertyName)
     {
-        PropertyFieldsCount.WithLabels(Service, Env, propertyId.ToString()).Inc();
+        PropertyFieldsCount.WithLabels(Service, Env, propertyId.ToString(), propertyName)
+            .Inc();
     }
 
-    public void FieldDeleted(Guid propertyId)
+    public void FieldDeleted(Guid propertyId, string propertyName)
     {
-        PropertyFieldsCount.WithLabels(Service, Env, propertyId.ToString()).Dec();
+        PropertyFieldsCount.WithLabels(Service, Env, propertyId.ToString(), propertyName)
+            .Dec();
     }
 }

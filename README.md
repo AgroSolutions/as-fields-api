@@ -6,6 +6,19 @@ AgroSolutions (AS) é uma cooperativa inovadora de gestão de colheitas e agricu
 
 [Documentação](https://www.notion.so/Agro-Solutions-2eba50ade7548089b001fb1756081926)
 
+## Observabilidade
+
+Você poderá encontrar arquivos de observabilidade usados pelo Prometheus e pelo Grafana nas pastas:
+
+- as-fields-api/AS.Fields.Application/Observability
+- as-fields-api/AS.Fields.API/Observability/
+
+# Observações
+
+Você poderá encontrar os cálculos para que talhões não possam ser cadastrados nas latitudes e longitudes que já foram ocupadas por outros talhões nos arquivos:
+
+- as-fields-api/AS.Fields.Application/Services/FieldService.cs
+
 ## ⚙️ Tecnologias e Plataformas utilizadas
 
 - [.NET 8](https://dotnet.microsoft.com/download/dotnet/8.0)

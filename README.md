@@ -28,7 +28,6 @@ Você poderá encontrar os cálculos para que talhões não possam ser cadastrad
 - [XUnit](https://xunit.net/)
 - [Swagger](https://swagger.io/)
 - [Docker](https://www.docker.com/)
-- [New Relic](https://newrelic.com/pt/platform)
 
 ## 🛠️ Como Executar
 
